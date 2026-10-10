@@ -44,36 +44,40 @@ El bundle se sirve con `Cache-Control: immutable` (ver `deploy/vercel.json`) y e
 
 ```
 arena-web/
-├── index.html          # Player local (versión simple)
+├── dosbox.conf         # Config del emulador (fuente única, editable)
 ├── build_bundle.py     # Genera el bundle .jsdos desde bundle/
 ├── serve.py            # Servidor local sin caché (puerto 8000)
-├── test_serve.py       # Tests del servidor
+├── test_serve.py       # Servidor de prueba (puerto 8001)
+├── index.html          # Player local
 ├── jugar.ps1           # Arranque local en Windows
-├── bundle/             # TU copia del juego (no versionada) + dosbox.conf
+├── bundle/             # TU copia del juego (no versionada) — creala vos
 └── deploy/             # Artefacto desplegado en Vercel
     ├── index.html      # Player con pantalla de carga + progreso + crédito
-    ├── vercel.json     # Headers de caché
-    └── .vercel/        # Link del proyecto Vercel (no versionado)
+    └── vercel.json     # Headers de caché
 ```
 
 ## Uso local
 
-1. Copia los archivos de tu Arena a `arena-web/bundle/` (excluye instaladores, el PDF del manual, `SPEECH`, `cloud_saves` y el DOSBOX embebido de GOG si lo hay).
-2. Ajusta `arena-web/bundle/dosbox.conf` si hace falta.
-3. Construye el bundle:
+Requisitos: [Python 3](https://python.org) (3.7+) y tu propia copia de Arena.
 
-   ```powershell
-   python build_bundle.py
-   ```
+```powershell
+git clone https://github.com/FrancoCastillo1/elder-scrolls-arena-web.git
+cd elder-scrolls-arena-web
 
-4. Sirve en local y abre el navegador:
+# 1) Copia tu Arena (versión CD 1.07, por ejemplo desde GOG) a la carpeta bundle/
+#    Debe incluir ACD.EXE y GLOBAL.BSA en la raíz de esa carpeta.
 
-   ```powershell
-   python serve.py
-   # → http://localhost:8000
-   ```
+# 2) Construye el bundle
+python build_bundle.py
 
-> `build_bundle.py` espera la estructura `.jsdos/` dentro del ZIP (directorio + `.jsdos/dosbox.conf`). PowerShell 5.1 falla con extensiones `.jsdos`; usa el script de Python.
+# 3) Juega en el navegador
+python serve.py
+# → abre http://localhost:8000
+```
+
+- La config del emulador está en `dosbox.conf` (raíz). Editalo ahí, no en `bundle/`.
+- Si `build_bundle.py` dice que falta el juego, es que no copiaste Arena a `bundle/`.
+- `build_bundle.py` espera la estructura `.jsdos/` dentro del ZIP; PowerShell 5.1 falla con extensiones `.jsdos`, por eso se usa Python.
 
 ## Despliegue en Vercel
 
@@ -88,7 +92,7 @@ cd deploy
 
 ### Notas para el despliegue
 
-- Si cambias la config de DOSBox, vuelve a ejecutar `build_bundle.py` y **cambia la versión del nombre** del `.jsdos` (por ejemplo a `arena-v5.jsdos`) en `deploy/index.html` y `deploy/vercel.json`.
+- Si cambias `dosbox.conf`, vuelve a correr `build_bundle.py`. Para forzar que el navegador descargue el bundle nuevo, sube `VERSION` en `build_bundle.py` (p. ej. a `"v5"`) y actualiza el nombre en `deploy/index.html` y `deploy/vercel.json`.
 - No subas tokens ni credenciales a este repo.
 
 ## Créditos

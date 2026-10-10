@@ -21,9 +21,10 @@
   <div class="tip">Protección anticopia: al salir de la dungeon inicial teclea una palabra de Passwords.txt · Guardar/Cargar desde el menú de js-dos (Esc)</div>
   <script>
     const props = Dos(document.getElementById("dosbox"), {
-      url: "./arena-v3.jsdos",
+      url: "./arena-v4.jsdos",
       autoStart: true,
       imageRendering: "pixelated",
+      offscreenCanvas: true,
     });
     props.setNoCloud(true);
   </script>
