@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Elder Scrolls: Arena (1994) — WebAssembly</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; height: 100%; }
+    #root { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+    #dosbox { width: 100%; height: 100%; }
+    .tip { position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
+           color: #888; font: 12px monospace; pointer-events: none; }
+  </style>
+  <script src="https://v8.js-dos.com/latest/js-dos.js"></script>
+  <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
+</head>
+<body>
+  <div id="root">
+    <div id="dosbox"></div>
+  </div>
+  <div class="tip">Protección anticopia: al salir de la dungeon inicial teclea una palabra de Passwords.txt · Guardar/Cargar desde el menú de js-dos (Esc)</div>
+  <script>
+    const props = Dos(document.getElementById("dosbox"), {
+      url: "./arena-v3.jsdos",
+      autoStart: true,
+      imageRendering: "pixelated",
+    });
+    props.setNoCloud(true);
+  </script>
+</body>
+</html>
