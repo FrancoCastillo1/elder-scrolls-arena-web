@@ -6,8 +6,6 @@ Porte de **The Elder Scrolls: Arena** (1994) a WebAssembly usando [js-dos v8](ht
 
 **https://tes-arena-1994.vercel.app**
 
-> Nota: el proyecto usa *Deployment Protection* de Vercel, así que puede pedirte iniciar sesión en Vercel antes de mostrar el juego.
-
 Porteado por [Franco Castillo (FrancoCastillo1)](https://github.com/FrancoCastillo1).
 
 ## Aclaración sobre los assets (importante)
